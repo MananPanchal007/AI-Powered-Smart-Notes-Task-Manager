@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: smart-notes-manager
+  
+  # MongoDB Configuration
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/smartnotes}
+      auto-index-creation: true
+  
+  # WebFlux Configuration
+  webflux:
+    base-path: /api
+  
+  # Security Configuration
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:}
+            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            scope:
+              - email
+              - profile
+        provider:
+          google:
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
+# Server Configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Application Configuration
+app:
+  openai:
+    api-key: ${OPENAI_API_KEY:}
+    model: gpt-3.5-turbo-instruct
+    max-tokens: 500
+    temperature: 0.7
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    org.springframework: INFO
+    com.smartnotes: DEBUG
+
+# OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    doc-expansion: none
